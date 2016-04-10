@@ -10,6 +10,7 @@ package Practical3Patient;
  * @author k
  */
 public class Patient implements Comparable {
+
     String name;
     int severity;
     double time;
@@ -19,7 +20,10 @@ public class Patient implements Comparable {
         return "Patient{" + "name=" + name + ", severity=" + severity + ", time=" + time + '}';
     }
 
-    public Patient(String name, int severity, double time) {
+    public Patient(String name, int severity, double time) throws
+            SeverityOutOfBoundsException{
+        if(severity < 1 || severity >10)
+            throw new SeverityOutOfBoundsException();
         this.name = name;
         this.severity = severity;
         this.time = time;
@@ -51,8 +55,16 @@ public class Patient implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        return ((Patient)o).getSeverity() - this.severity;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (((Patient) o).getSeverity() == this.severity) {
+
+            if (((Patient) o).getTime() > this.time) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+        return ((Patient) o).getSeverity() - this.severity;
+//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
